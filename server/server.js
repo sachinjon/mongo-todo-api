@@ -27,6 +27,14 @@ app.post("/todolist",(req,res)=>{
     })
 })
 
+app.get("/todolist",(req,res)=>{
+    todomodel.find().then((todos)=>{
+        res.send({todos});
+    },(err)=>{
+        res.status(200).send(err);       
+    })
+})
+
 app.listen(3000,()=>{
     console.log("application listening 3000");
 })
