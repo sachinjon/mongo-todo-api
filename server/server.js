@@ -21,12 +21,14 @@ app.post("/todolist",(req,res)=>{
     console.log(req.body);
     var newtodo=new todomodel({text:req.body.text})
     newtodo.save().then((docs)=>{
-        res.send(docs);
+        res.status(200).send(docs);
     },(err)=>{
-        res.send(err);
+        res.status(400).send(err);
     })
 })
 
 app.listen(3000,()=>{
     console.log("application listening 3000");
 })
+
+module.exports={app};
