@@ -5,6 +5,9 @@ var {mongoose} = require("./db/mongoose");
 var {usermodel} =require("./models/user");
 var {todomodel} =require("./models/todo");
 
+var {ObjectId}=require("mongodb");
+var port = process.env.PORT || 3000;
+
 var app=express();
 app.use(bodyParser.json());
 
@@ -35,8 +38,17 @@ app.get("/todolist",(req,res)=>{
     })
 })
 
-app.listen(3000,()=>{
-    console.log("application listening 3000");
+app.get("/todolist/:id",(req,res)=>{
+    if(!ObjectId.isValid(req.params.id)){
+        res.status(404).send();
+    }
+    todomodel.findById(req.params.id).then((list)=>{
+        res.send({list})
+    })
+})
+
+app.listen(port,()=>{
+    console.log(`application listening ${port}`);
 })
 
 module.exports={app};
